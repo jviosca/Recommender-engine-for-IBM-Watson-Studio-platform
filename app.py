@@ -1,6 +1,7 @@
 import streamlit as st
 import numpy as np
 from recommender import Recommender
+import base64
 
 #################################################
 #  Initialize objects, variables and functions  #
@@ -68,8 +69,8 @@ if 'user_id' not in st.session_state:
 if "slider_step" not in st.session_state:
     st.session_state.slider_step = 1
 
-if "slider_val" not in st.session_state:
-    st.session_state.slider_val = 6
+#if "slider_val" not in st.session_state:
+#    st.session_state.slider_val = 6
     
 def store_new_seen(article_id):
     ''' Stores user activity and updates data structures to recompute 
@@ -88,6 +89,32 @@ def store_new_seen(article_id):
                                                      article_id)
     # if number of articles seen > 5, user type needs to change:
     update_user_type()
+
+
+def show_gif(path, alt_text):
+    ''' Shows GIF in Streamlit page
+
+    Parameters
+    ----------
+    path (string): path to gif file
+    alt_text (string): alt text for gif
+
+    Returns
+    -------
+    None.
+
+    '''
+    
+    gif_file_ = open(path, "rb")
+    gif_contents = gif_file_.read()
+    data_url = base64.b64encode(gif_contents).decode("utf-8")
+    gif_file_.close()
+    st.markdown(f'<img src="data:image/gif;base64,{data_url}" alt="' 
+                + alt_text + '" style="max-width:100%">',
+                    unsafe_allow_html=True)
+
+#def update_slider(new_value):
+ #   st.session_state.slider_val = new_value    
     
 ###############
 #   Layout    #
@@ -95,13 +122,13 @@ def store_new_seen(article_id):
 
 # Page title
 st.title(':blue[Recommender system for IBM Watson Studio platform]')
-#st.write(st.session_state)
 
 # There are 3 tabs: Home, Recommender and Credits
 tab1, tab2, tab3 = st.tabs(['Home', 'Recommender', 'Credits'])
 with tab1:
     st.write('This webapp showcases a **recommender system** built from records \
-            of user interactions with content items at IBM Watson Studio.')
+            of user interactions with content items at \
+            [IBM Watson Studio](https://www.ibm.com/cloud/watson-studio).')
     st.write('The engine recommends content items using **content-based and \
              collaborative-filtering** approaches tailored to different user types:')
     st.markdown('- **New users**: users that have not interacted with any \
@@ -123,6 +150,7 @@ with tab1:
              click on the *Recommender* tab above and simulate user activity on the \
              platform by picking articles to read. You can obtain \
              personalized recommendations for you or other users!')
+    show_gif('img/app_tabs.gif', 'tabs')
 
 with tab2:
     with st.expander("How it works:"):
@@ -132,11 +160,22 @@ with tab2:
                 appear at the top. Recommendations appear below. Each item \
                 is contained in a expander - unfold it to read the article teaser \
                 by clicking on the arrow located next to the title.')
+        show_gif('img/select_user.gif', 'user_type gif')
+        st.write("")
+        st.write("")
         st.markdown('2. To obtain new recommendations, add items to the \
                 *Articles seen* list by clicking on the **Mark as seen** button \
                 below the teaser from the *Recommended articles* section \
                 (you need to expand the item first).')
-
+        show_gif('img/mark_as_seen.gif', 'new_seen_item gif')
+        st.write("")
+        st.write("")
+        st.write('For users with a lot of activity, \
+                 you can control the number of read items to show with a **slider** \
+                 (only visible when the user has seen more than 6 articles)')
+        show_gif('img/slider.gif', 'slider gif')
+    
+    st.write("")
     st.session_state.rec_engine.get_articles_seen(st.session_state.user_id)
     articles_seen = st.session_state.rec_engine.articles_seen
     number_seen = len(articles_seen[0])
@@ -184,16 +223,10 @@ with tab2:
             num_articles_shown = st.slider('Number of seen articles to show:',
                                            min_value = 6,
                                            max_value = number_seen,
-                                           value = st.session_state.slider_val,
-                                           step = st.session_state.slider_step)
+                                           step = st.session_state.slider_step,
+                                           key = 'slider_val')
         else: # New users and recent users            
             num_articles_shown = number_seen
-        
-        # reset slider_val if user type changes:
-        if num_articles_shown > 6:
-            st.session_state.slider_val = num_articles_shown
-        else:
-            st.session_state.slider_val = 6
         
         # Layout articles
         col1,col2 = st.columns(2)
@@ -244,5 +277,5 @@ with tab2:
                               args=(article_id,))
 
 with tab3:
-    st.write('For more information, visit the GitHub repository.')  
+    st.write('For more information, visit the [GitHub repository](https://github.com/jviosca/Recommender-engine-for-IBM-Watson-Studio-platform).')  
     st.write('Author: [Jose Viosca Ros](https://jvros.com.es/index.php/es/inicio/)')           
