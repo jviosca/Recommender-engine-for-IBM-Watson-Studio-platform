@@ -114,7 +114,7 @@ def show_gif(path, alt_text):
 st.title(':blue[Recommender system for IBM Watson Studio platform]')
 
 # There are 3 tabs: Home, Recommender and Credits
-tab1, tab2, tab3 = st.tabs(['Home', 'Recommender', 'Credits'])
+tab1, tab2, tab3, tab4 = st.tabs(['Home', 'How it works', 'Recommender', 'Credits'])
 with tab1:
     st.write('This webapp showcases a **recommender system** built from records \
             of user interactions with content items at \
@@ -143,28 +143,29 @@ with tab1:
     show_gif('img/app_tabs.gif', 'tabs')
 
 with tab2:
-    with st.expander("How it works:"):
-        st.write('To obtain recommendations, follow these steps:')
-        st.markdown('1. **Choose a user type** (to set a random "user id" from that \
+    
+    st.write('To obtain recommendations, follow these steps:')
+    st.markdown('1. **Choose a user type** (to set a random "user id" from that \
                 category). Articles that have been seen by that user (if any) \
                 appear at the top. Recommendations appear below. Each item \
                 is contained in a expander - unfold it to read the article teaser \
                 by clicking on the arrow located next to the title.')
+    with st.expander('Show GIF:'):
         show_gif('img/select_user.gif', 'user_type gif')
-        st.write("")
-        st.write("")
-        st.markdown('2. To obtain new recommendations, add items to the \
+    st.markdown('2. To obtain new recommendations, add items to the \
                 *Articles seen* list by clicking on the **Mark as seen** button \
                 below the teaser from the *Recommended articles* section \
                 (you need to expand the item first).')
+    with st.expander('Show GIF:'):
         show_gif('img/mark_as_seen.gif', 'new_seen_item gif')
-        st.write("")
-        st.write("")
-        st.write('For users with a lot of activity, \
-                 you can control the number of read items to show with a **slider** \
-                 (only visible when the user has seen more than 6 articles)')
-        show_gif('img/slider.gif', 'slider gif')
-    
+    st.write("")
+    st.write('For users with a lot of activity, \
+                 a **slider** lets you control the number of read items to show\
+                 (only visible when the user has seen more than 6 articles).')
+    with st.expander('Show GIF:'):
+        show_gif('img/slider.gif', 'slider gif')    
+
+with tab3:
     st.write("")
     st.session_state.rec_engine.get_articles_seen(st.session_state.user_id)
     articles_seen = st.session_state.rec_engine.articles_seen
@@ -199,7 +200,7 @@ with tab2:
     
     # Section 'Articles seen by user'
     if number_seen>0:
-        st.markdown('##### :blue[Articles seen by selected user]')
+        st.markdown('##### :blue[Articles seen by selected user:]')
     
         # set slider step 
         if number_seen % 2 != 0: # uneven number
@@ -237,7 +238,7 @@ with tab2:
         
     
     # Section 'Recommendations'
-    st.markdown('##### :blue[Recommended articles for selected user]')
+    st.markdown('##### :blue[Recommended articles for selected user:]')
     st.session_state.rec_engine.make_recommendations(st.session_state.user_id)
     recommendations = st.session_state.rec_engine.recommended_articles[0]
     
@@ -266,6 +267,6 @@ with tab2:
                               on_click=store_new_seen, 
                               args=(article_id,))
 
-with tab3:
+with tab4:
     st.write('For more information, visit the [GitHub repository](https://github.com/jviosca/Recommender-engine-for-IBM-Watson-Studio-platform).')  
     st.write('Author: [Jose Viosca Ros](https://jvros.com.es/index.php/es/inicio/)')           
