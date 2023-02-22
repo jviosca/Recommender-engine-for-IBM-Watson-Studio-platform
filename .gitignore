@@ -1,0 +1,9 @@
+env.txt
+rubric.pdf
+top_5.p
+top_10.p
+top_20.p
+user_item_matrix.p
+users_dot_product.csv
+back_up.py
+__pycache__
