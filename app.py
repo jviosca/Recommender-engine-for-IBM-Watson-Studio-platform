@@ -66,11 +66,8 @@ if 'user_id' not in st.session_state:
    set_user_id()
 
 # stores slider_step size is session state
-if "slider_step" not in st.session_state:
-    st.session_state.slider_step = 1
-
-#if "slider_val" not in st.session_state:
-#    st.session_state.slider_val = 6
+#if "slider_step" not in st.session_state:
+#    st.session_state.slider_step = 1
     
 def store_new_seen(article_id):
     ''' Stores user activity and updates data structures to recompute 
@@ -111,10 +108,7 @@ def show_gif(path, alt_text):
     gif_file_.close()
     st.markdown(f'<img src="data:image/gif;base64,{data_url}" alt="' 
                 + alt_text + '" style="max-width:100%">',
-                    unsafe_allow_html=True)
-
-#def update_slider(new_value):
- #   st.session_state.slider_val = new_value    
+                    unsafe_allow_html=True)   
     
 ###############
 #   Layout    #
@@ -213,17 +207,17 @@ with tab2:
     
         # set slider step 
         if number_seen % 2 != 0: # uneven number
-            st.session_state.slider_step = 1
+            slider_step = 1
         else: # even number
-            st.session_state.slider_step = 2
+            slider_step = 2
         if number_seen % 6 == 0: # multiples of 6
-            st.session_state.slider_step = 6
+            slider_step = 6
         if number_seen>6:
             # Slider to show more articles
             num_articles_shown = st.slider('Number of seen articles to show:',
                                            min_value = 6,
                                            max_value = number_seen,
-                                           step = st.session_state.slider_step,
+                                           step = slider_step,
                                            key = 'slider_val')
         else: # New users and recent users            
             num_articles_shown = number_seen
