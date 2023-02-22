@@ -64,10 +64,6 @@ def set_user_id():
 if 'user_id' not in st.session_state:
    st.session_state.user_type = 'New user' 
    set_user_id()
-
-# stores slider_step size is session state
-#if "slider_step" not in st.session_state:
-#    st.session_state.slider_step = 1
     
 def store_new_seen(article_id):
     ''' Stores user activity and updates data structures to recompute 
