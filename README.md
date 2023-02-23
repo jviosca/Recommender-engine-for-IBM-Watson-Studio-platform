@@ -36,10 +36,12 @@ in the platform (items with higher number of views).
 - When a user that has recently joined the platform 
 (number of articles seen > 0 and < 6) enters the platform, 
 the recommender shows, in addition to popular articles, articles that 
-are similar to those already seen by the user.
+are similar to those already seen by the user. There are around 3500 users 
+from this type in the dataset. 
 - In the rest of the cases (i.e. when a "Old" user who has seen more than 
 5 articles enters the platform), the engine shows, in addition to popular
-and similar articles, articles that have been seen by similar users.
+and similar articles, articles that have been seen by similar users. There 
+are 1660 users from this user type in the dataset.
 
 A demo of the recommender is deployed in Streamlit cloud and can be 
 accessed [here](https://recommender-ibm-watson.streamlit.app/). 
@@ -69,7 +71,7 @@ given a k number of latent factors.
 
 A longer description of the recommender approaches and dataset exploration 
 can be found at the post available 
-[here](https://jvros.com.es/index.php/en/on-the-roots-of-overweight-nature-or-nurture/).
+[here](https://jvros.com.es/index.php/en/a-recommender-engine-for-ibm-watson-studio-platform/).
 
 
 ## Installation <a name="installation"></a>
@@ -93,8 +95,11 @@ The Streamlit webapp uses the following files:
 - app.py (contains the code for the Streamlit app)
 - requirements.txt (contains libraries that need to be imported at 
 Streamlit cloud)
+- img (contains several images)
 
 The jupyter notebook imports or loads data from the following scripts:
+- data (contains 2 csv files: the dataset containing user activity records
+and content data)
 - project_tests.py (contains several grading functions)
 - user_item_matrix.p (contains the user-item-matrix, as described above)
 - users_dot_product.csv (used to compute user similarity)  
