@@ -1,6 +1,6 @@
 # Recommender Engine for IBM Watson Studio platform
 A content-based and collaborative-filtering recommendation system for 
-content items and users at IBM Watson Studio platform
+content items and users at IBM Watson Studio platform.
 
 
 ### Table of Contents
@@ -13,7 +13,7 @@ content items and users at IBM Watson Studio platform
 
 ## Project Motivation<a name="motivation"></a>
 
-To build a recommender engine for content items at IBM-Watson Studio
+The aim of this project is to build a recommender engine for content items at IBM-Watson Studio
 platform using a variety of recommender approaches:
 - Content-based recommendations, based on content similarity
 - Collaborative-filtering, based on user similarity
@@ -38,11 +38,11 @@ in the platform (items with higher number of views).
 the recommender shows, in addition to popular articles, articles that 
 are similar to those already seen by the user.
 - In the rest of the cases (i.e. when a "Old" user who has seen more than 
-5 articles enter the platform), the engine shows, in addition to popular
+5 articles enters the platform), the engine shows, in addition to popular
 and similar articles, articles that have been seen by similar users.
 
 A demo of the recommender is deployed in Streamlit cloud and can be 
-accessed [here](https://recommender-ibm-watson.streamlit.app/) 
+accessed [here](https://recommender-ibm-watson.streamlit.app/). 
 The webapp showcases the recommender engine in the 3 scenarios described 
 above and simulates user activity to show how recommendations are updated
 accordingly.
@@ -51,7 +51,7 @@ In addition, a Jupyter notebook called "Recommendations_with_IBM.ipynb" contains
 an exploratory data analysis of the datasets and describes 
 the creation of a "Recommender" class writen 
 in Python that can be easily reused or repurposed. The notebook also contains
-graded questions for the Udacity's assignment. 
+graded questions for Udacity's assignment. 
 
 In short, the recommendation approaches in such a class use:
 - User-user based collaborative filtering, to pull articles seen by similar
@@ -75,8 +75,8 @@ can be found at the post available
 ## Installation <a name="installation"></a>
 
 If you want to build your own recommender starting from this one, you can either 
-fork this repository and install it on [Streamlit cloud] 
-(https://docs.streamlit.io/streamlit-community-cloud/get-started/deploy-an-app) 
+fork this repository and install it on Streamlit cloud
+([instructions](https://docs.streamlit.io/streamlit-community-cloud/get-started/deploy-an-app)) 
 or clone it and run Streamlit [locally](https://docs.streamlit.io/library/get-started/create-an-app) 
 on your computer.
 
