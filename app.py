@@ -7,13 +7,30 @@ import base64
 #  Initialize objects, variables and functions  #
 #################################################
 
+@st.cache_data
+def start_engine():
+    ''' Initializes Recommender class object
+    Parameters
+    -------
+    None
+
+    Returns
+    -------
+    Recommender (python class): object that stores user activity, content data
+    and makes recommendations using several data structures as attributes 
+    and methods to compute them.
+
+    '''
+    return Recommender()    
+
 # Instantiate recommender object
-rec_engine = Recommender()
+rec_engine = start_engine()
 
 # store rec_engine object in session state
+# needed by streamlit to be able to update the 'df' attribute of Recommender class
 if "rec_engine" not in st.session_state:
     st.session_state.rec_engine = rec_engine
-    
+
 def update_user_type():
     ''' Updates user type if new articles are added to the seen list
     New user = has seen 0 articles
@@ -83,7 +100,7 @@ def store_new_seen(article_id):
     # if number of articles seen > 5, user type needs to change:
     update_user_type()
 
-
+@st.cache_data
 def show_gif(path, alt_text):
     ''' Shows GIF in Streamlit page
 
@@ -105,6 +122,7 @@ def show_gif(path, alt_text):
     st.markdown(f'<img src="data:image/gif;base64,{data_url}" alt="' 
                 + alt_text + '" style="max-width:100%">',
                     unsafe_allow_html=True)   
+
     
 ###############
 #   Layout    #
@@ -132,7 +150,7 @@ with tab1:
                 articles that share more words in their title text.')
     st.markdown('- **Old users**: those that have seen more than 5 items. In \
                 addition to popular and similar articles (content based \
-              recommendations) just explained for the other 2 types of users, \
+              recommendations) just explained, \
             articles read by other *similar users* are also pulled as \
                 recommendations.')
     st.write('The list of recommendations is **updated dynamically** according \
@@ -150,19 +168,19 @@ with tab2:
                 appear at the top. Recommendations appear below. Each item \
                 is contained in a expander - unfold it to read the article teaser \
                 by clicking on the arrow located next to the title.')
-    with st.expander('Show GIF:'):
+    with st.expander('Show GIF'):
         show_gif('img/select_user.gif', 'user_type gif')
     st.markdown('2. To obtain new recommendations, add items to the \
                 *Articles seen* list by clicking on the **Mark as seen** button \
                 below the teaser from the *Recommended articles* section \
                 (you need to expand the item first).')
-    with st.expander('Show GIF:'):
+    with st.expander('Show GIF'):
         show_gif('img/mark_as_seen.gif', 'new_seen_item gif')
     st.write("")
     st.write('For users with a lot of activity, \
                  a **slider** lets you control the number of read items to show\
                  (only visible when the user has seen more than 6 articles).')
-    with st.expander('Show GIF:'):
+    with st.expander('Show GIF'):
         show_gif('img/slider.gif', 'slider gif')    
 
 with tab3:
