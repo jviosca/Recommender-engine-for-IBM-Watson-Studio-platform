@@ -2,6 +2,7 @@ import streamlit as st
 import numpy as np
 from recommender import Recommender
 import base64
+from PIL import Image
 
 #################################################
 #  Initialize objects, variables and functions  #
@@ -123,6 +124,25 @@ def show_gif(path, alt_text):
                 + alt_text + '" style="max-width:100%">',
                     unsafe_allow_html=True)   
 
+@st.cache_data
+def show_image(path):
+    ''' Places image centered
+    
+
+    Parameters
+    ----------
+    path (string): path to image file
+
+    Returns
+    -------
+    None.
+
+    '''
+    col1, col2, col3, col4, col5 = st.columns(5)
+    with col3:
+        image = Image.open(path)
+        st.image(image)
+    
     
 ###############
 #   Layout    #
@@ -134,9 +154,10 @@ st.title(':blue[Recommender system for IBM Watson Studio platform]')
 # There are 3 tabs: Home, Recommender and Credits
 tab1, tab2, tab3, tab4 = st.tabs(['Home', 'How it works', 'Recommender', 'Credits'])
 with tab1:
+    show_image('img/like.png') 
     st.write('This webapp showcases a **recommender system** built from records \
             of user interactions with content items at \
-            [IBM Watson Studio](https://www.ibm.com/cloud/watson-studio).')
+            [IBM Watson Studio](https://www.ibm.com/cloud/watson-studio).')      
     st.write('The engine recommends content items using **content-based and \
              collaborative-filtering** approaches tailored to different user types:')
     st.markdown('- **New users**: users that have not interacted with any \
@@ -153,6 +174,7 @@ with tab1:
               recommendations) just explained, \
             articles read by other *similar users* are also pulled as \
                 recommendations.')
+    show_image('img/update.png')
     st.write('The list of recommendations is **updated dynamically** according \
              to user activity. To interact with the engine and see its results, \
              click on the *Recommender* tab above and simulate user activity on the \
@@ -161,7 +183,7 @@ with tab1:
     show_gif('img/app_tabs.gif', 'tabs')
 
 with tab2:
-    
+    show_image('img/use.png') 
     st.write('To obtain recommendations, follow these steps:')
     st.markdown('1. **Choose a user type** (to set a random "user id" from that \
                 category). Articles that have been seen by that user (if any) \
@@ -170,6 +192,7 @@ with tab2:
                 by clicking on the arrow located next to the title.')
     with st.expander('Show GIF'):
         show_gif('img/select_user.gif', 'user_type gif')
+    show_image('img/see.png')
     st.markdown('2. To obtain new recommendations, add items to the \
                 *Articles seen* list by clicking on the **Mark as seen** button \
                 below the teaser from the *Recommended articles* section \
@@ -184,7 +207,7 @@ with tab2:
         show_gif('img/slider.gif', 'slider gif')    
 
 with tab3:
-    st.write("")
+    show_image('img/play.png')
     st.session_state.rec_engine.get_articles_seen(st.session_state.user_id)
     articles_seen = st.session_state.rec_engine.articles_seen
     number_seen = len(articles_seen[0])
